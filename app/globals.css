@@ -146,4 +146,23 @@
   .loader {
     @apply flex size-full h-screen items-center justify-center gap-3 text-white;
   }
+
+  /* ---------- Auth Page ---------- */
+  .auth-page {
+    @apply flex h-screen w-full flex-col items-center justify-center gap-10;
+  }
+
+  /* ---------- Home Page ---------- */
+  .home-container {
+    @apply relative flex min-h-screen w-full flex-col items-center gap-5 sm:gap-10;
+  }
+
+  .document-ul {
+    @apply flex w-full max-w-[730px] flex-col gap-5;
+  }
+
+  /* ---------- Collaborative Room ---------- */
+  .collaborative-room {
+    @apply flex size-full max-h-screen flex-1 flex-col items-center overflow-hidden;
+  }
 }
