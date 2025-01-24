@@ -19,6 +19,7 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { useThreads } from '@liveblocks/react/suspense';
 import Loader from '@/components/Loader';
+import Comments from '@/components/Comments';
 import React from 'react';
 
 // Catch any errors that occur during Lexical updates and log them
@@ -81,6 +82,7 @@ export function Editor({
           <LiveblocksPlugin>
             <FloatingComposer className='w-[350px]' />
             <FloatingThreads threads={threads} />
+            <Comments />
           </LiveblocksPlugin>
         </div>
       </div>
