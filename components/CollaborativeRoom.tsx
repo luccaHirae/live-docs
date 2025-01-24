@@ -14,9 +14,8 @@ import { updateDocument } from '@/lib/actions/room.actions';
 const CollaborativeRoom = ({
   roomId,
   roomMetadata,
+  currentUserType,
 }: CollaborativeRoomProps) => {
-  const currentUserType = 'editor';
-
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [documentTItle, setDocumentTItle] = useState(roomMetadata.title);
@@ -123,7 +122,7 @@ const CollaborativeRoom = ({
               <UserButton />
             </div>
           </Header>
-          <Editor />
+          <Editor roomId={roomId} currentUserType={currentUserType} />
         </div>
       </ClientSideSuspense>
     </RoomProvider>

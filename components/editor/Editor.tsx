@@ -2,13 +2,23 @@
 
 import Theme from './plugins/Theme';
 import ToolbarPlugin from './plugins/ToolbarPlugin';
+import FloatingToolbarPlugin from './plugins/FloatingToolbarPlugin';
 import { HeadingNode } from '@lexical/rich-text';
+import {
+  FloatingComposer,
+  FloatingThreads,
+  liveblocksConfig,
+  LiveblocksPlugin,
+  useIsEditorReady,
+} from '@liveblocks/react-lexical';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
+import { useThreads } from '@liveblocks/react/suspense';
+import Loader from '@/components/Loader';
 import React from 'react';
 
 // Catch any errors that occur during Lexical updates and log them
@@ -19,8 +29,16 @@ function Placeholder() {
   return <div className='editor-placeholder'>Enter some rich text...</div>;
 }
 
-export function Editor() {
-  const initialConfig = {
+export function Editor({
+  currentUserType,
+}: {
+  roomId: string;
+  currentUserType: UserType;
+}) {
+  const isEditorReady = useIsEditorReady();
+  const { threads } = useThreads();
+
+  const initialConfig = liveblocksConfig({
     namespace: 'Editor',
     nodes: [HeadingNode],
     onError: (error: Error) => {
@@ -28,23 +46,42 @@ export function Editor() {
       throw error;
     },
     theme: Theme,
-  };
+    editable: currentUserType === 'editor',
+  });
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <div className='editor-container size-full'>
-        <ToolbarPlugin />
+        <div className='toolbar-wrapper flex min-w-full justify-between'>
+          <ToolbarPlugin />
 
-        <div className='editor-inner h-[1100px]'>
-          <RichTextPlugin
-            contentEditable={
-              <ContentEditable className='editor-input h-full' />
-            }
-            placeholder={<Placeholder />}
-            ErrorBoundary={LexicalErrorBoundary}
-          />
-          <HistoryPlugin />
-          <AutoFocusPlugin />
+          {/* {currentUserType === 'editor' && (
+            <DeleteModal roomId={roomId} />
+          )} */}
+        </div>
+
+        <div className='editor-wrapper flex flex-col items-center justify-start'>
+          {isEditorReady ? (
+            <div className='editor-inner min-h-[1100px] relative mb-5 h-fit w-full max-w-[800px] shadow-md lg:mb-10'>
+              <RichTextPlugin
+                contentEditable={
+                  <ContentEditable className='editor-input h-full' />
+                }
+                placeholder={<Placeholder />}
+                ErrorBoundary={LexicalErrorBoundary}
+              />
+              {currentUserType === 'editor' && <FloatingToolbarPlugin />}
+              <HistoryPlugin />
+              <AutoFocusPlugin />
+            </div>
+          ) : (
+            <Loader />
+          )}
+
+          <LiveblocksPlugin>
+            <FloatingComposer className='w-[350px]' />
+            <FloatingThreads threads={threads} />
+          </LiveblocksPlugin>
         </div>
       </div>
     </LexicalComposer>

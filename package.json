@@ -14,6 +14,7 @@
     "@liveblocks/client": "^2.16.1",
     "@liveblocks/node": "^2.16.1",
     "@liveblocks/react": "^2.16.1",
+    "@liveblocks/react-lexical": "^2.16.1",
     "@liveblocks/react-tiptap": "^2.16.1",
     "@liveblocks/react-ui": "^2.16.1",
     "@radix-ui/react-slot": "^1.1.1",
