@@ -5,6 +5,7 @@ import React, { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import Loader from '@/components/Loader';
 import Header from '@/components/Header';
 import ActiveCollaborators from '@/components/ActiveCollaborators';
+import ShareModal from '@/components/ShareModal';
 import { ClientSideSuspense, RoomProvider } from '@liveblocks/react/suspense';
 import { UserButton } from '@clerk/nextjs';
 import { Editor } from '@/components/editor/Editor';
@@ -15,6 +16,7 @@ const CollaborativeRoom = ({
   roomId,
   roomMetadata,
   currentUserType,
+  users,
 }: CollaborativeRoomProps) => {
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -119,9 +121,18 @@ const CollaborativeRoom = ({
 
             <div className='flex w-full flex-1 justify-end gap-2 sm:gap-3'>
               <ActiveCollaborators />
+
+              <ShareModal
+                roomId={roomId}
+                collaborators={users}
+                creatorId={roomMetadata.creatorId}
+                currentUserType={currentUserType}
+              />
+
               <UserButton />
             </div>
           </Header>
+
           <Editor roomId={roomId} currentUserType={currentUserType} />
         </div>
       </ClientSideSuspense>
