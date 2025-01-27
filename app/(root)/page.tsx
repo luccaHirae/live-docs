@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import AddDocumentButton from '@/components/AddDocumentButton';
+import Notifications from '@/components/Notifications';
 import { DeleteModal } from '@/components/DeleteModal';
 import { UserButton } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
@@ -23,7 +24,7 @@ const Home = async () => {
     <main className='home-container'>
       <Header className='sticky left-0 top-0'>
         <div className='flex items-center gap-2 lg:gap-4'>
-          Notification
+          <Notifications />
           <UserButton />
         </div>
       </Header>

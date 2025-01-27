@@ -31,6 +31,7 @@ const Document = async ({ params: { id } }: SearchParamProps) => {
   ]?.includes('room:write')
     ? 'editor'
     : 'viewer';
+
   return (
     <main className='flex w-full flex-col items-center'>
       <CollaborativeRoom
