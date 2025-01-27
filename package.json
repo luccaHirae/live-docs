@@ -17,6 +17,7 @@
     "@liveblocks/react-lexical": "^2.16.1",
     "@liveblocks/react-tiptap": "^2.16.1",
     "@liveblocks/react-ui": "^2.16.1",
+    "@radix-ui/react-dialog": "^1.1.5",
     "@radix-ui/react-slot": "^1.1.1",
     "@sentry/nextjs": "^8.51.0",
     "@tiptap/react": "^2.11.2",
